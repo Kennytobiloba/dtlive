@@ -1,6 +1,6 @@
 export const createBlog = async (blogData:any) => {
   try {
-    const response = await fetch("http://localhost:3000/api/blogs", {
+    const response = await fetch("/api/blogs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,12 @@ export const createBlog = async (blogData:any) => {
 
 export const getBlogs = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/blogs");
+    const response = await fetch("/api/blogs");
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     const result = await response.json();
     
     if (result.success) {
@@ -34,13 +39,18 @@ export const getBlogs = async () => {
     }
   } catch (error) {
     console.error("Get blogs error:", error);
-    throw error;
+    // Return empty array as fallback
+    return {
+      success: true,
+      data: [],
+      message: 'Unable to fetch blogs at the moment'
+    };
   }
 };
 
 export const getBlogById = async (id:any) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/blogs/${id}`);
+    const response = await fetch(`/api/blogs/${id}`);
     const result = await response.json();
     
     if (result.success) {
@@ -56,7 +66,7 @@ export const getBlogById = async (id:any) => {
 
 export const updateBlog = async (id:any, updatedData:any) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/blogs/${id}`, {
+    const response = await fetch(`/api/blogs/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +89,7 @@ export const updateBlog = async (id:any, updatedData:any) => {
 
 export const deleteBlog = async (id:any) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/blogs/${id}`, {
+    const response = await fetch(`/api/blogs/${id}`, {
       method: "DELETE",
     });
 
