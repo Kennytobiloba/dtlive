@@ -44,8 +44,11 @@ export function Navigation() {
             <Link href="/#contact" className="text-sm hover:text-primary transition-colors text-foreground">
               Contact
             </Link>
+            <Link href="/#contact">
+              <Button size="sm" className="bg-primary hover:bg-primary/90">Book Me Now</Button>
+            </Link>
             <Link href="/admin">
-              <Button size="sm">Admin</Button>
+              <Button size="sm" variant="outline">Admin</Button>
             </Link>
           </div>
 
@@ -73,8 +76,13 @@ export function Navigation() {
             <Link href="/#contact" className="text-sm hover:text-primary transition-colors text-foreground">
               Contact
             </Link>
+            <Link href="/#contact">
+              <Button size="sm" className="w-fit bg-primary hover:bg-primary/90">
+                Book Me Now
+              </Button>
+            </Link>
             <Link href="/admin">
-              <Button size="sm" className="w-fit">
+              <Button size="sm" className="w-fit" variant="outline">
                 Admin
               </Button>
             </Link>

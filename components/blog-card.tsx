@@ -18,6 +18,13 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ blog }: BlogCardProps) {
+  // Function to strip HTML tags from excerpt
+  const stripHtml = (html: string) => {
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+  };
+
   return (
     <Link href={`/blog/${blog.id}`}>
       <Card className="overflow-hidden hover:shadow-2xl hover:shadow-primary/20 transition-all duration-300 hover:-translate-y-2 h-full border-2 border-primary/20 hover:border-primary/40 bg-gradient-to-br from-card to-primary/5">
@@ -26,7 +33,7 @@ export function BlogCard({ blog }: BlogCardProps) {
             src={blog.image || "/placeholder.svg"} 
             alt={blog.title} 
             fill 
-            className="object-contain bg-muted/20" 
+            className="object-cover object-top  bg-muted/20" 
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
         </div>
@@ -46,7 +53,9 @@ export function BlogCard({ blog }: BlogCardProps) {
             </div>
           </div>
           <h3 className="text-xl font-bold mb-2 line-clamp-2 text-balance text-foreground">{blog.title}</h3>
-          <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">{blog.excerpt}</p>
+          <p className="text-sm text-muted-foreground line-clamp-3 leading-relaxed">
+            {stripHtml(blog.excerpt)}
+          </p>
         </CardContent>
       </Card>
     </Link>

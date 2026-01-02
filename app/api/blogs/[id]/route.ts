@@ -1,34 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// This would be your database in a real app
-// For now, we'll import the dummy data (in a real app, you'd use a database)
-let blogs = [
-  {
-    id: '1',
-    title: 'Getting Started with Jazz',
-    content: 'Jazz is a music genre that originated in the African-American communities...',
-    author: 'John Doe',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    id: '2',
-    title: 'The Art of Improvisation',
-    content: 'Improvisation is at the heart of jazz music...',
-    author: 'Jane Smith',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-];
+import connectDB from '@/lib/mongodb';
+import Blog from '@/models/Blog';
+import mongoose from 'mongoose';
 
 // GET /api/blogs/[id] - Get a single blog by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
-    const blog = blogs.find(b => b.id === id);
+    await connectDB();
+    const { id } = await params;
+
+    console.log("GET blog by ID:", id); // Debug log
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      console.log("Invalid ObjectId:", id); // Debug log
+      return NextResponse.json(
+        { success: false, message: 'Invalid blog ID' },
+        { status: 400 }
+      );
+    }
+
+    const blog = await Blog.findById(id);
+    console.log("blog", blog)
 
     if (!blog) {
       return NextResponse.json(
@@ -43,6 +38,7 @@ export async function GET(
       message: 'Blog fetched successfully'
     });
   } catch (error) {
+    console.error('Get blog error:', error);
     return NextResponse.json(
       { success: false, message: 'Failed to fetch blog' },
       { status: 500 }
@@ -53,37 +49,52 @@ export async function GET(
 // PUT /api/blogs/[id] - Update a blog
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    await connectDB();
+    const { id } = await params;
     const body = await request.json();
-    const { title, content, author } = body;
+    const { title, excerpt, content, author, date, venue, image } = body;
 
-    const blogIndex = blogs.findIndex(b => b.id === id);
+    console.log("PUT blog by ID:", id); // Debug log
 
-    if (blogIndex === -1) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      console.log("Invalid ObjectId:", id); // Debug log
+      return NextResponse.json(
+        { success: false, message: 'Invalid blog ID' },
+        { status: 400 }
+      );
+    }
+
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      id,
+      {
+        ...(title && { title }),
+        ...(excerpt && { excerpt }),
+        ...(content && { content }),
+        ...(author && { author }),
+        ...(date && { date }),
+        ...(venue && { venue }),
+        ...(image && { image }),
+      },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedBlog) {
       return NextResponse.json(
         { success: false, message: 'Blog not found' },
         { status: 404 }
       );
     }
 
-    // Update the blog
-    blogs[blogIndex] = {
-      ...blogs[blogIndex],
-      title: title || blogs[blogIndex].title,
-      content: content || blogs[blogIndex].content,
-      author: author || blogs[blogIndex].author,
-      updatedAt: new Date().toISOString(),
-    };
-
     return NextResponse.json({
       success: true,
-      data: blogs[blogIndex],
+      data: updatedBlog,
       message: 'Blog updated successfully'
     });
   } catch (error) {
+    console.error('Update blog error:', error);
     return NextResponse.json(
       { success: false, message: 'Failed to update blog' },
       { status: 500 }
@@ -94,20 +105,27 @@ export async function PUT(
 // DELETE /api/blogs/[id] - Delete a blog
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
-    const blogIndex = blogs.findIndex(b => b.id === id);
+    await connectDB();
+    const { id } = await params;
 
-    if (blogIndex === -1) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid blog ID' },
+        { status: 400 }
+      );
+    }
+
+    const deletedBlog = await Blog.findByIdAndDelete(id);
+
+    if (!deletedBlog) {
       return NextResponse.json(
         { success: false, message: 'Blog not found' },
         { status: 404 }
       );
     }
-
-    const deletedBlog = blogs.splice(blogIndex, 1)[0];
 
     return NextResponse.json({
       success: true,
@@ -115,6 +133,7 @@ export async function DELETE(
       message: 'Blog deleted successfully'
     });
   } catch (error) {
+    console.error('Delete blog error:', error);
     return NextResponse.json(
       { success: false, message: 'Failed to delete blog' },
       { status: 500 }

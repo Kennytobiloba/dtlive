@@ -6,29 +6,29 @@ import { Music2, Guitar, Piano, Drum } from "lucide-react"
 
 const instruments = [
   {
-    name: "Piano",
-    icon: Piano,
-    description: "Classical and contemporary piano with focus on jazz improvisation",
-    years: "12 years",
+    name: "Lead Guitar",
+    icon: Guitar,
+    description: "Electric and acoustic lead guitar with expertise in solos and rhythm",
+    years: "10 years",
     gradient: "from-primary/20 to-primary/5",
     iconBg: "bg-primary/10",
     iconColor: "text-primary",
     borderColor: "border-primary/30",
   },
   {
-    name: "Guitar",
+    name: "Bass Guitar",
     icon: Guitar,
-    description: "Acoustic and electric guitar specializing in fingerstyle and lead",
-    years: "15 years",
+    description: "Deep grooves and melodic bass lines that anchor the rhythm section",
+    years: "10 years",
     gradient: "from-secondary/20 to-secondary/5",
     iconBg: "bg-secondary/10",
     iconColor: "text-secondary",
     borderColor: "border-secondary/30",
   },
   {
-    name: "Violin",
-    icon: Music2,
-    description: "Orchestral and modern violin with experimental techniques",
+    name: "Keyboard",
+    icon: Piano,
+    description: "Versatile keyboard playing from classical to contemporary styles",
     years: "10 years",
     gradient: "from-accent/20 to-accent/5",
     iconBg: "bg-accent/10",
@@ -36,10 +36,10 @@ const instruments = [
     borderColor: "border-accent/30",
   },
   {
-    name: "Drums",
+    name: "Talking Drum",
     icon: Drum,
-    description: "Percussion and drum set with expertise in multiple genres",
-    years: "8 years",
+    description: "Traditional African percussion with modern fusion techniques",
+    years: "10 years",
     gradient: "from-primary/20 to-accent/5",
     iconBg: "bg-primary/10",
     iconColor: "text-primary",
@@ -79,7 +79,7 @@ export function Instruments() {
             </span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-            Each instrument brings its own voice to the composition, creating a symphony of sounds.
+            These are the instruments I play, each bringing its unique sound to create amazing music.
           </p>
         </div>
 

@@ -1,95 +1,90 @@
+"use client"
+
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import Image from "next/image"
 import { Calendar, MapPin, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import Img from "../../../img/damilarethree.jpeg"
-import Imgtwo from "../../../img/damilaretwo.jpeg"
-import Imgthree from "../../../img/img.jpeg"
+import { useEffect, useState } from "react"
+import { useAppDispatch } from "@/store/hooks"
+import { getBlogByIdThunk } from "@/store/blogSlice"
+import ReactMarkdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw'
+import remarkGfm from 'remark-gfm'
 
-// Dummy blog data (in real app, this would come from MongoDB)
-const blogPosts = {
-  "1": {
-    id: "1",
-    title: "Symphony Under the Stars - Summer Concert Series",
-    excerpt: "Join me for an unforgettable evening of classical and contemporary music under the open sky.",
-    content: `
-      <h2>An Evening of Musical Magic</h2>
-      <p>I'm thrilled to announce the Symphony Under the Stars concert series, taking place throughout the summer at Central Park Amphitheater. This special event brings together the best of classical and contemporary music in a stunning outdoor setting.</p>
-      
-      <h3>What to Expect</h3>
-      <p>This performance will feature a unique circular musical arrangement, where I'll transition seamlessly between piano, violin, guitar, and percussion to create a full orchestral sound. The evening will include:</p>
-      <ul>
-        <li>Bach's Goldberg Variations (Piano)</li>
-        <li>Original compositions featuring all instruments</li>
-        <li>Contemporary arrangements of classical favorites</li>
-        <li>Improvised sections with audience participation</li>
-      </ul>
-      
-      <h3>The Venue</h3>
-      <p>Central Park Amphitheater provides the perfect backdrop for this intimate yet grand performance. With its natural acoustics and open-air setting, the music takes on a magical quality as the sun sets and stars emerge.</p>
-      
-      <h3>Tickets & Information</h3>
-      <p>Limited seating available. Early bird tickets are now on sale. Bring a blanket and prepare for an unforgettable evening of music under the stars.</p>
-      
-      <p>I can't wait to share this special performance with you. See you there!</p>
-    `,
-    image: Img,
-    date: "2024-06-15",
-    venue: "Central Park Amphitheater",
-  },
-  "2": {
-    id: "2",
-    title: "Jazz Fusion Night at Blue Note",
-    excerpt: "An intimate evening exploring the boundaries of jazz through multi-instrumental improvisation.",
-    content: `
-      <h2>Jazz Reimagined</h2>
-      <p>Join me for an intimate evening at the legendary Blue Note Jazz Club, where we'll explore the boundaries of jazz through multi-instrumental improvisation and circular musical performance.</p>
-      
-      <h3>The Performance</h3>
-      <p>This special show features original jazz fusion compositions that showcase the versatility of playing multiple instruments in real-time. Watch as I transition from piano to guitar to drums, creating layers of sound that build upon each other.</p>
-      
-      <h3>Special Guests</h3>
-      <p>I'll be joined by some incredible musicians from the New York jazz scene for collaborative improvisation segments. Expect the unexpected!</p>
-      
-      <p>Limited seating in this intimate venue. Reserve your spot today.</p>
-    `,
-    image: Imgtwo,
-    date: "2024-05-20",
-    venue: "Blue Note Jazz Club",
-  },
-  "3": {
-    id: "3",
-    title: "Masterclass: The Art of Multi-Instrumental Performance",
-    excerpt: "A comprehensive workshop for musicians looking to expand their skills across multiple instruments.",
-    content: `
-      <h2>Learn Multi-Instrumental Techniques</h2>
-      <p>I'm excited to offer this comprehensive masterclass at Berklee School of Music, focusing on the art of multi-instrumental performance and circular musical composition.</p>
-      
-      <h3>What You'll Learn</h3>
-      <ul>
-        <li>Techniques for seamless instrument transitions</li>
-        <li>Building circular musical arrangements</li>
-        <li>Overcoming physical and mental challenges of switching instruments</li>
-        <li>Creating cohesive performances across different instrument families</li>
-        <li>Practice strategies for maintaining proficiency on multiple instruments</li>
-      </ul>
-      
-      <h3>Who Should Attend</h3>
-      <p>This workshop is designed for intermediate to advanced musicians who play at least two instruments and want to incorporate multi-instrumental performance into their repertoire.</p>
-      
-      <h3>Registration</h3>
-      <p>Space is limited to 20 participants to ensure personalized attention. Register through the Berklee website.</p>
-    `,
-    image: Imgthree,
-    date: "2024-04-10",
-    venue: "Berklee School of Music",
-  },
+interface Blog {
+  _id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  author: string;
+  date: string;
+  venue: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-export default function BlogPostPage({ params }: { params: { id: string } }) {
-  const blog = blogPosts[params.id as keyof typeof blogPosts] || blogPosts["1"]
+export default function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
+  const dispatch = useAppDispatch()
+  const [blog, setBlog] = useState<Blog | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        setLoading(true)
+        const resolvedParams = await params
+        const id = resolvedParams.id
+        
+        console.log("Fetching blog with ID:", id) // Debug log
+        
+        const result = await dispatch(getBlogByIdThunk(id))
+        if (result.payload && result.payload.success) {
+          setBlog(result.payload.data)
+        }
+      } catch (error) {
+        console.error('Error fetching blog:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBlog()
+  }, [dispatch, params])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen">
+        <Navigation />
+        <div className="pt-24 pb-16 flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-lg text-muted-foreground">Loading blog post...</div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    )
+  }
+
+  if (!blog) {
+    return (
+      <div className="min-h-screen">
+        <Navigation />
+        <div className="pt-24 pb-16 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-foreground mb-4">Blog Post Not Found</h1>
+            <p className="text-muted-foreground mb-8">The blog post you're looking for doesn't exist.</p>
+            <Link href="/blog">
+              <Button>Back to Blog</Button>
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen">
@@ -104,28 +99,78 @@ export default function BlogPostPage({ params }: { params: { id: string } }) {
             Back to all events
           </Link>
 
-          <div className="relative h-[400px] w-full rounded-2xl overflow-hidden mb-8 bg-muted/20">
-            <Image src={blog.image || "/placeholder.svg"} alt={blog.title} fill className="object-contain" />
-          </div>
+          {/* Blog Image */}
+          {blog.image && (
+            <div className="relative h-[400px] w-full rounded-2xl overflow-hidden mb-8 bg-muted/20">
+              <Image 
+                src={blog.image} 
+                alt={blog.title} 
+                fill 
+                className="object-cover" 
+              />
+            </div>
+          )}
 
           <div className="flex items-center gap-6 text-sm text-muted-foreground mb-6">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              {new Date(blog.date).toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
+              {blog.date ? 
+                new Date(blog.date).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                }) :
+                new Date(blog.createdAt).toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })
+              }
             </div>
+            {blog.venue && (
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                {blog.venue}
+              </div>
+            )}
             <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4" />
-              {blog.venue}
+              <span>By {blog.author}</span>
             </div>
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-balance text-foreground">{blog.title}</h1>
 
-          <div className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground" dangerouslySetInnerHTML={{ __html: blog.content }} />
+          {/* Blog Excerpt */}
+          {blog.excerpt && (
+            <div className="text-xl text-muted-foreground mb-8 leading-relaxed italic border-l-4 border-primary pl-6">
+              {blog.excerpt}
+            </div>
+          )}
+
+          <div className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-ul:text-foreground prose-ol:text-foreground">
+            <ReactMarkdown
+              rehypePlugins={[rehypeRaw]}
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h1: ({ children }) => <h1 className="text-3xl font-bold text-foreground mt-8 mb-4">{children}</h1>,
+                h2: ({ children }) => <h2 className="text-2xl font-bold text-foreground mt-6 mb-3">{children}</h2>,
+                h3: ({ children }) => <h3 className="text-xl font-bold text-foreground mt-4 mb-2">{children}</h3>,
+                p: ({ children }) => <p className="text-foreground mb-4 leading-relaxed">{children}</p>,
+                ul: ({ children }) => <ul className="text-foreground mb-4 ml-6 list-disc">{children}</ul>,
+                ol: ({ children }) => <ol className="text-foreground mb-4 ml-6 list-decimal">{children}</ol>,
+                li: ({ children }) => <li className="text-foreground mb-2">{children}</li>,
+                strong: ({ children }) => <strong className="text-foreground font-semibold">{children}</strong>,
+                em: ({ children }) => <em className="text-foreground italic">{children}</em>,
+                blockquote: ({ children }) => (
+                  <blockquote className="border-l-4 border-primary pl-4 italic my-4 text-muted-foreground">
+                    {children}
+                  </blockquote>
+                ),
+              }}
+            >
+              {blog.content}
+            </ReactMarkdown>
+          </div>
 
           <div className="mt-12 pt-8 border-t border-border">
             <Link href="/blog">

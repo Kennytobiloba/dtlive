@@ -1,8 +1,7 @@
 "use client"
 
 import type React from "react"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -13,43 +12,124 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { RichTextEditor } from "@/components/rich-text-editor"
+import { ImageUpload } from "@/components/image-upload"
+import { getBlogByIdThunk, updateBlogThunk } from "@/store/blogSlice"
+import { useAppDispatch } from "@/store/hooks"
+import toast, { Toaster } from 'react-hot-toast'
 
-// Dummy data
-const blogData = {
-  "1": {
-    title: "Symphony Under the Stars - Summer Concert Series",
-    excerpt: "Join me for an unforgettable evening of classical and contemporary music under the open sky.",
-    content: "<h2>An Evening of Musical Magic</h2><p>Content here...</p>",
-    date: "2024-06-15",
-    venue: "Central Park Amphitheater",
-    image: "/outdoor-concert-under-stars.jpg",
-  },
-}
-
-export default function EditBlogPage({ params }: { params: { id: string } }) {
+export default function EditBlogPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
-  const blog = blogData[params.id as keyof typeof blogData] || blogData["1"]
+  const dispatch = useAppDispatch()
 
   const [formData, setFormData] = useState({
-    title: blog.title,
-    excerpt: blog.excerpt,
-    content: blog.content,
-    date: blog.date,
-    venue: blog.venue,
-    image: blog.image,
+    title: "",
+    excerpt: "",
+    content: "",
+    date: "",
+    venue: "",
+    image: "",
+    author: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [loading, setLoading] = useState(false)
+  const [fetchLoading, setFetchLoading] = useState(true)
+  const [blogId, setBlogId] = useState<string>("")
+
+  // Fetch blog data when component mounts
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        setFetchLoading(true)
+        const resolvedParams = await params
+        const id = resolvedParams.id
+        setBlogId(id)
+        
+        console.log("Fetching blog with ID:", id) // Debug log
+        
+        const result = await dispatch(getBlogByIdThunk(id))
+        
+        if (result.payload && result.payload.success) {
+          const blog = result.payload.data
+          console.log("Fetched blog data:", blog) // Debug log
+          setFormData({
+            title: blog.title || "",
+            excerpt: blog.excerpt || "",
+            content: blog.content || "",
+            date: blog.date || "",
+            venue: blog.venue || "",
+            image: blog.image || "",
+            author: blog.author || "",
+          })
+        } else {
+          toast.error("Failed to fetch blog post")
+          router.push("/admin")
+        }
+      } catch (error) {
+        toast.error("An error occurred while fetching the blog post")
+        console.error("Fetch blog error:", error)
+        router.push("/admin")
+      } finally {
+        setFetchLoading(false)
+      }
+    }
+
+    fetchBlog()
+  }, [dispatch, params, router])
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In real app, this would update in MongoDB
-    console.log("Updating blog post:", formData)
-    alert("Blog post updated successfully!")
-    router.push("/admin")
+    setLoading(true)
+
+    try {
+      const payload = {
+        title: formData.title,
+        excerpt: formData.excerpt,
+        content: formData.content,
+        author: formData.author,
+        date: formData.date,
+        venue: formData.venue,
+        image: formData.image,
+      }
+
+      console.log("Updating blog post:", payload)
+
+      const result = await dispatch(updateBlogThunk({ 
+        id: blogId, 
+        updatedData: payload 
+      }))
+      
+      if (result.payload && result.payload.success) {
+        toast.success("Blog post updated successfully!")
+        router.push("/admin")
+      } else {
+        toast.error("Failed to update blog post")
+      }
+    } catch (error) {
+      toast.error("An error occurred while updating the blog post")
+      console.error("Update blog error:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (fetchLoading) {
+    return (
+      <div className="min-h-screen">
+        <Navigation />
+        <div className="pt-24 pb-16 flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-lg text-muted-foreground">Loading blog post...</div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    )
   }
 
   return (
     <div className="min-h-screen">
       <Navigation />
+
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <Link
@@ -64,87 +144,123 @@ export default function EditBlogPage({ params }: { params: { id: string } }) {
             <CardHeader>
               <CardTitle>Edit Blog Post</CardTitle>
             </CardHeader>
+
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Title */}
                 <div>
-                  <label htmlFor="title" className="block text-sm font-medium mb-2">
+                  <label htmlFor="title" className="block text-sm font-medium mb-2 text-foreground">
                     Title
                   </label>
                   <Input
                     id="title"
                     value={formData.title}
-                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, title: e.target.value })
+                    }
                     placeholder="Enter blog post title"
                     required
                   />
                 </div>
 
+                {/* Excerpt */}
                 <div>
-                  <label htmlFor="excerpt" className="block text-sm font-medium mb-2">
+                  <label htmlFor="excerpt" className="block text-sm font-medium mb-2 text-foreground">
                     Excerpt
                   </label>
                   <Textarea
                     id="excerpt"
                     value={formData.excerpt}
-                    onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, excerpt: e.target.value })
+                    }
                     placeholder="Brief description for the blog card"
                     rows={3}
-                    required
                   />
                 </div>
 
+                {/* Date */}
                 <div>
-                  <label htmlFor="date" className="block text-sm font-medium mb-2">
+                  <label htmlFor="date" className="block text-sm font-medium mb-2 text-foreground">
                     Event Date
                   </label>
                   <Input
                     id="date"
                     type="date"
                     value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    required
+                    onChange={(e) =>
+                      setFormData({ ...formData, date: e.target.value })
+                    }
                   />
                 </div>
 
+                {/* Venue */}
                 <div>
-                  <label htmlFor="venue" className="block text-sm font-medium mb-2">
+                  <label htmlFor="venue" className="block text-sm font-medium mb-2 text-foreground">
                     Venue
                   </label>
                   <Input
                     id="venue"
                     value={formData.venue}
-                    onChange={(e) => setFormData({ ...formData, venue: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, venue: e.target.value })
+                    }
                     placeholder="Event location"
-                    required
                   />
                 </div>
 
+                {/* Image */}
                 <div>
-                  <label htmlFor="image" className="block text-sm font-medium mb-2">
-                    Image URL
+                  <label className="block text-sm font-medium mb-2 text-foreground">
+                    Image
+                  </label>
+                  <ImageUpload
+                    value={formData.image}
+                    onChange={(url) => setFormData({ ...formData, image: url })}
+                    disabled={loading || fetchLoading}
+                  />
+                </div>
+
+                {/* Author */}
+                <div>
+                  <label htmlFor="author" className="block text-sm font-medium mb-2 text-foreground">
+                    Author
                   </label>
                   <Input
-                    id="image"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="/placeholder.svg?height=400&width=600"
+                    id="author"
+                    value={formData.author}
+                    onChange={(e) =>
+                      setFormData({ ...formData, author: e.target.value })
+                    }
+                    placeholder="Author name"
                     required
                   />
                 </div>
 
+                {/* Content */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Content</label>
+                  <label className="block text-sm font-medium mb-2 text-foreground">
+                    Content
+                  </label>
                   <RichTextEditor
                     value={formData.content}
-                    onChange={(value) => setFormData({ ...formData, content: value })}
+                    onChange={(value) =>
+                      setFormData({ ...formData, content: value })
+                    }
                   />
                 </div>
 
+                {/* Actions */}
                 <div className="flex gap-4">
-                  <Button type="submit" className="flex-1">
-                    Update Post
+                  <Button type="submit" className="flex-1" disabled={loading}>
+                    {loading ? "Updating..." : "Update Post"}
                   </Button>
-                  <Button type="button" variant="outline" onClick={() => router.push("/admin")}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => router.push("/admin")}
+                    disabled={loading}
+                  >
                     Cancel
                   </Button>
                 </div>
@@ -153,7 +269,19 @@ export default function EditBlogPage({ params }: { params: { id: string } }) {
           </Card>
         </div>
       </div>
+
       <Footer />
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: 'var(--background)',
+            color: 'var(--foreground)',
+            border: '1px solid var(--border)',
+          },
+        }}
+      />
     </div>
   )
 }

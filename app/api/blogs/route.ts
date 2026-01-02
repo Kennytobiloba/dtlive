@@ -1,34 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-// Dummy data for development - you can replace this with your database later
-let blogs = [
-  {
-    id: '1',
-    title: 'Getting Started with Jazz',
-    content: 'Jazz is a music genre that originated in the African-American communities...',
-    author: 'John Doe',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-  {
-    id: '2',
-    title: 'The Art of Improvisation',
-    content: 'Improvisation is at the heart of jazz music...',
-    author: 'Jane Smith',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  },
-];
+import connectDB from '@/lib/mongodb';
+import Blog from '@/models/Blog';
 
 // GET /api/blogs - Get all blogs
 export async function GET() {
   try {
+    await connectDB();
+    const blogs = await Blog.find({}).sort({ createdAt: -1 });
+    
     return NextResponse.json({
       success: true,
       data: blogs,
       message: 'Blogs fetched successfully'
     });
   } catch (error) {
+    console.error('Get blogs error:', error);
     return NextResponse.json(
       { success: false, message: 'Failed to fetch blogs' },
       { status: 500 }
@@ -36,12 +22,14 @@ export async function GET() {
   }
 }
 
-// POST /api/blogs - Create a new blog
 export async function POST(request: NextRequest) {
   try {
+    await connectDB();
     const body = await request.json();
-    const { title, content, author } = body;
+    const { title, excerpt, content, author, date, venue, image } = body;
+     console.log("newblog", body)
 
+    // Only require the essential fields
     if (!title || !content || !author) {
       return NextResponse.json(
         { success: false, message: 'Title, content, and author are required' },
@@ -49,16 +37,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const newBlog = {
-      id: Date.now().toString(),
+    const newBlog = await Blog.create({
       title,
+      excerpt: excerpt || "",
       content,
       author,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-
-    blogs.push(newBlog);
+      date,
+      venue,
+      image: image || "/placeholder.svg"
+    });
+    console.log(" new blog", newBlog)
+   
 
     return NextResponse.json({
       success: true,
@@ -66,6 +55,7 @@ export async function POST(request: NextRequest) {
       message: 'Blog created successfully'
     }, { status: 201 });
   } catch (error) {
+    console.error('Create blog error:', error);
     return NextResponse.json(
       { success: false, message: 'Failed to create blog' },
       { status: 500 }

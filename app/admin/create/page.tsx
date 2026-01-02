@@ -1,7 +1,6 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
@@ -13,9 +12,15 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { RichTextEditor } from "@/components/rich-text-editor"
+import { ImageUpload } from "@/components/image-upload"
+import { createBlogThunk } from "@/store/blogSlice"
+import { useAppDispatch } from "@/store/hooks"
+import toast, { Toaster } from 'react-hot-toast'
 
 export default function CreateBlogPage() {
   const router = useRouter()
+  const dispatch = useAppDispatch()
+
   const [formData, setFormData] = useState({
     title: "",
     excerpt: "",
@@ -25,17 +30,46 @@ export default function CreateBlogPage() {
     image: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // In real app, this would save to MongoDB
-    console.log("Creating blog post:", formData)
-    alert("Blog post created successfully!")
-    router.push("/admin")
+    setLoading(true)
+
+    try {
+      // ✅ Send all fields with payload
+      const payload = {
+        title: formData.title,
+        excerpt: formData.excerpt,
+        content: formData.content,
+        author: "Admin",
+        date: formData.date,
+        venue: formData.venue,
+        image: formData.image,
+      }
+
+      console.log("Creating blog post:", payload)
+
+      const result = await dispatch(createBlogThunk(payload))
+      
+      if (result.payload && result.payload.success) {
+        toast.success("Blog post created successfully!")
+        router.push("/admin")
+      } else {
+        toast.error("Failed to create blog post")
+      }
+    } catch (error) {
+      toast.error("An error occurred while creating the blog post")
+      console.error("Create blog error:", error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <div className="min-h-screen">
       <Navigation />
+
       <div className="pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <Link
@@ -50,8 +84,10 @@ export default function CreateBlogPage() {
             <CardHeader>
               <CardTitle>Create New Blog Post</CardTitle>
             </CardHeader>
+
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Title */}
                 <div>
                   <label htmlFor="title" className="block text-sm font-medium mb-2">
                     Title
@@ -59,12 +95,15 @@ export default function CreateBlogPage() {
                   <Input
                     id="title"
                     value={formData.title}
-                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, title: e.target.value })
+                    }
                     placeholder="Enter blog post title"
                     required
                   />
                 </div>
 
+                {/* Excerpt */}
                 <div>
                   <label htmlFor="excerpt" className="block text-sm font-medium mb-2">
                     Excerpt
@@ -72,13 +111,15 @@ export default function CreateBlogPage() {
                   <Textarea
                     id="excerpt"
                     value={formData.excerpt}
-                    onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, excerpt: e.target.value })
+                    }
                     placeholder="Brief description for the blog card"
                     rows={3}
-                    required
                   />
                 </div>
 
+                {/* Date */}
                 <div>
                   <label htmlFor="date" className="block text-sm font-medium mb-2">
                     Event Date
@@ -87,11 +128,13 @@ export default function CreateBlogPage() {
                     id="date"
                     type="date"
                     value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                    required
+                    onChange={(e) =>
+                      setFormData({ ...formData, date: e.target.value })
+                    }
                   />
                 </div>
 
+                {/* Venue */}
                 <div>
                   <label htmlFor="venue" className="block text-sm font-medium mb-2">
                     Venue
@@ -99,38 +142,49 @@ export default function CreateBlogPage() {
                   <Input
                     id="venue"
                     value={formData.venue}
-                    onChange={(e) => setFormData({ ...formData, venue: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, venue: e.target.value })
+                    }
                     placeholder="Event location"
-                    required
                   />
                 </div>
 
+                {/* Image */}
                 <div>
-                  <label htmlFor="image" className="block text-sm font-medium mb-2">
-                    Image URL
+                  <label className="block text-sm font-medium mb-2">
+                    Image
                   </label>
-                  <Input
-                    id="image"
+                  <ImageUpload
                     value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    placeholder="/placeholder.svg?height=400&width=600"
-                    required
+                    onChange={(url) => setFormData({ ...formData, image: url })}
+                    disabled={loading}
                   />
                 </div>
 
+                {/* Content */}
                 <div>
-                  <label className="block text-sm font-medium mb-2">Content</label>
+                  <label className="block text-sm font-medium mb-2">
+                    Content
+                  </label>
                   <RichTextEditor
                     value={formData.content}
-                    onChange={(value) => setFormData({ ...formData, content: value })}
+                    onChange={(value) =>
+                      setFormData({ ...formData, content: value })
+                    }
                   />
                 </div>
 
+                {/* Actions */}
                 <div className="flex gap-4">
-                  <Button type="submit" className="flex-1">
-                    Publish Post
+                  <Button type="submit" className="flex-1" disabled={loading}>
+                    {loading ? "Publishing..." : "Publish Post"}
                   </Button>
-                  <Button type="button" variant="outline" onClick={() => router.push("/admin")}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => router.push("/admin")}
+                    disabled={loading}
+                  >
                     Cancel
                   </Button>
                 </div>
@@ -139,7 +193,19 @@ export default function CreateBlogPage() {
           </Card>
         </div>
       </div>
+
       <Footer />
+      <Toaster 
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: 'var(--background)',
+            color: 'var(--foreground)',
+            border: '1px solid var(--border)',
+          },
+        }}
+      />
     </div>
   )
 }

@@ -57,7 +57,7 @@ export function About() {
             </h2>
 
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              With over 15 years of experience in circular musical performance, I bring a unique approach to live music
+              With over 10 years of experience in circular musical performance, I bring a unique approach to live music
               by seamlessly transitioning between piano, guitar, violin, and drums within a single performance.
             </p>
 
@@ -69,11 +69,11 @@ export function About() {
 
             <div className="grid grid-cols-3 gap-6 mt-8">
               <div className="bg-card p-4 rounded-xl border border-border">
-                <div className="text-4xl font-bold text-primary">15+</div>
+                <div className="text-4xl font-bold text-primary">10+</div>
                 <div className="text-sm text-muted-foreground mt-1">Years Experience</div>
               </div>
               <div className="bg-card p-4 rounded-xl border border-border">
-                <div className="text-4xl font-bold text-primary">200+</div>
+                <div className="text-4xl font-bold text-primary">100+</div>
                 <div className="text-sm text-muted-foreground mt-1">Performances</div>
               </div>
               <div className="bg-card p-4 rounded-xl border border-border">
