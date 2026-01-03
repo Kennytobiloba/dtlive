@@ -4,6 +4,8 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Logo from "../img/Logotwo.png"
+import Image from "next/image"
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -23,9 +25,18 @@ export function Navigation() {
     >
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-2xl font-bold tracking-tight text-foreground">
-            DTLIVE
+          <Link href="/" className="flex items-center">
+            <div className="relative w-10 h-10 md:w-20 md:h-20">
+              <Image
+                src={Logo}
+                alt="logo"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
           </Link>
+
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
