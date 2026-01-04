@@ -21,20 +21,38 @@ export default function AdminPage() {
   }, [dispatch])
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this blog post?")) {
-      try {
-        const result = await dispatch(deleteBlogThunk(id))
-        if (result.payload && result.payload.success) {
-          toast.success('Blog post deleted successfully')
-        } else {
-          toast.error('Failed to delete blog post')
-        }
-      } catch (error) {
-        toast.error('An error occurred while deleting the blog post')
-        console.error("Delete blog error:", error)
+    if (!confirm("Are you sure you want to delete this blog post?")) return;
+ 
+    try {
+      const res = await fetch(`/api/blogs/${id}`, {
+        method: "DELETE",
+      });
+
+      // Debug: log status
+      console.log("DELETE status:", res.status);
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("DELETE failed response:", text);
+        throw new Error(`Failed with status ${res.status}`);
       }
+
+      const data = await res.json();
+
+      if (data.success) {
+        toast.success("Blog post deleted successfully");
+
+        // 🔁 refresh list (simple way)
+        dispatch(getBlogsThunk());
+      } else {
+        toast.error(data.message || "Delete failed");
+      }
+    } catch (error) {
+      console.error("Delete blog error:", error);
+      toast.error("An error occurred while deleting the blog post");
     }
-  }
+  };
+
 
   return (
     <div className="min-h-screen">
@@ -86,7 +104,7 @@ export default function AdminPage() {
                       {/* Image (placeholder for now) */}
                       <div className="relative w-full md:w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
                         <Image
-                           src={blog.image || '/placeholder.png'}
+                          src={blog.image || '/placeholder.png'}
                           alt={blog.title}
                           fill
                           className="object-cover"
@@ -156,7 +174,7 @@ export default function AdminPage() {
         </div>
       </div>
       <Footer />
-      <Toaster 
+      <Toaster
         position="top-right"
         toastOptions={{
           duration: 4000,
