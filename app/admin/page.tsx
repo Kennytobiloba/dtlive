@@ -25,7 +25,7 @@ export default function AdminPage() {
       try {
         const result = await dispatch(deleteBlogThunk(id))
         if (result.payload && result.payload.success) {
-          toast.success('Blog post deleted successfully!')
+          toast.success('Blog post deleted successfully')
         } else {
           toast.error('Failed to delete blog post')
         }
