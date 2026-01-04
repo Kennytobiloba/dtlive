@@ -3,6 +3,11 @@ import connectDB from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import mongoose from 'mongoose';
 
+// OPTIONS handler for CORS
+export async function OPTIONS() {
+  return NextResponse.json({}, { status: 200 });
+}
+
 // GET /api/blogs/[id] - Get a single blog by ID
 export async function GET(
   request: NextRequest,
@@ -111,7 +116,10 @@ export async function DELETE(
     await connectDB();
     const { id } = await params;
 
+    console.log("DELETE blog by ID:", id); // Debug log
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
+      console.log("Invalid ObjectId:", id); // Debug log
       return NextResponse.json(
         { success: false, message: 'Invalid blog ID' },
         { status: 400 }

@@ -2,6 +2,7 @@
 
 import type React from "react"
 import { useState, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
@@ -17,9 +18,10 @@ import { getBlogByIdThunk, updateBlogThunk } from "@/store/blogSlice"
 import { useAppDispatch } from "@/store/hooks"
 import toast, { Toaster } from 'react-hot-toast'
 
-export default function EditBlogPage({ params }: { params: Promise<{ id: string }> }) {
+export default function EditBlogPage({ params }: { params: Promise<{ id: string }> | { id: string } }) {
   const router = useRouter()
   const dispatch = useAppDispatch()
+  const searchParams = useSearchParams()
 
   const [formData, setFormData] = useState({
     title: "",
@@ -40,17 +42,32 @@ export default function EditBlogPage({ params }: { params: Promise<{ id: string 
     const fetchBlog = async () => {
       try {
         setFetchLoading(true)
-        const resolvedParams = await params
-        const id = resolvedParams.id
-        setBlogId(id)
         
-        console.log("Fetching blog with ID:", id) // Debug log
+        // Handle both Promise and direct params
+        let id: string = ""
+        if (params && typeof params === "object") {
+          if ("then" in params) {
+            // It's a Promise
+            const resolvedParams = await params
+            id = resolvedParams.id
+          } else {
+            // It's a direct object
+            id = (params as { id: string }).id
+          }
+        }
+        
+        if (!id) {
+          throw new Error("No blog ID provided")
+        }
+        
+        setBlogId(id)
+        console.log("Fetching blog with ID:", id)
         
         const result = await dispatch(getBlogByIdThunk(id))
         
         if (result.payload && result.payload.success) {
           const blog = result.payload.data
-          console.log("Fetched blog data:", blog) // Debug log
+          console.log("Fetched blog data:", blog)
           setFormData({
             title: blog.title || "",
             excerpt: blog.excerpt || "",
