@@ -91,7 +91,15 @@ export const deleteBlog = async (id:any) => {
   try {
     const response = await fetch(`/api/blogs/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    }
 
     const result = await response.json();
     
