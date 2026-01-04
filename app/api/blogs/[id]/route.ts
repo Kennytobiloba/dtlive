@@ -1,12 +1,23 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import mongoose from 'mongoose';
+export const runtime = "nodejs";
+
 
 // OPTIONS handler for CORS
 export async function OPTIONS() {
-  return NextResponse.json({}, { status: 200 });
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
 }
+
 
 // GET /api/blogs/[id] - Get a single blog by ID
 export async function GET(
