@@ -33,7 +33,7 @@ export default function AdminPage() {
 
       if (!res.ok) {
         const text = await res.text();
-        console.error("DELETE failed response:", text);
+        console.error("DELETE failed response", text);
         throw new Error(`Failed with status ${res.status}`);
       }
 
