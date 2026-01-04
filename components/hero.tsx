@@ -53,7 +53,7 @@ export function Hero() {
           {/* Description */}
           <p className="text-base sm:text-lg md:text-2xl text-gray-300 text-pretty leading-relaxed mb-8 md:mb-12 max-w-3xl mx-auto px-2">
             Experience the art of circular musical performance, where piano, guitar, violin, and drums unite to create
-            unforgettable moments.
+            unforgettable moments
           </p>
 
           {/* Buttons */}
