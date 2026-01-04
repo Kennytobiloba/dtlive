@@ -3,7 +3,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 import mongoose from 'mongoose';
+
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 
 // OPTIONS handler for CORS

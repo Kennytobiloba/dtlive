@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Blog from '@/models/Blog';
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 // GET /api/blogs - Get all blogs
 export async function GET() {
   try {
