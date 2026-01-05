@@ -66,13 +66,18 @@ export const getBlogById = async (id:any) => {
 
 export const updateBlog = async (id:any, updatedData:any) => {
   try {
-    const response = await fetch(`/api/blogs/${id}`, {
+    const response = await fetch(`/api/blogs?id=${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedData),
     });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
+    }
 
     const result = await response.json();
     
@@ -89,7 +94,7 @@ export const updateBlog = async (id:any, updatedData:any) => {
 
 export const deleteBlog = async (id:any) => {
   try {
-    const response = await fetch(`/api/blogs/${id}`, {
+    const response = await fetch(`/api/blogs?id=${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -97,8 +102,8 @@ export const deleteBlog = async (id:any) => {
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      const text = await response.text();
+      throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
     }
 
     const result = await response.json();
