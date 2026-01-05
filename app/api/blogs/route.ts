@@ -6,6 +6,18 @@ import mongoose from 'mongoose';
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+// Handle OPTIONS requests
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
+}
+
 // GET /api/blogs or /api/blogs?id=xxx - Get all blogs or a single blog by ID
 export async function GET(request: NextRequest) {
   try {
