@@ -50,7 +50,7 @@ export const getBlogs = async () => {
 
 export const getBlogById = async (id:any) => {
   try {
-    const response = await fetch(`/api/blogs/${id}`);
+    const response = await fetch(`/api/blogs?id=${id}`);
     const result = await response.json();
     
     if (result.success) {
