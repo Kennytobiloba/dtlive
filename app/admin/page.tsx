@@ -25,7 +25,7 @@ export default function AdminPage() {
  
     try {
       console.log("Deleting blog with ID:", id); // Debug log
-      const res = await fetch(`/api/blogs/${id}`, {
+      const res = await fetch(`/api/blogs/delete?id=${id}`, {
         method: "DELETE",
       });
 

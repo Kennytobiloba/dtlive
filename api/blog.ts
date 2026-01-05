@@ -94,7 +94,7 @@ export const updateBlog = async (id:any, updatedData:any) => {
 
 export const deleteBlog = async (id:any) => {
   try {
-    const response = await fetch(`/api/blogs/${id}`, {
+    const response = await fetch(`/api/blogs/delete?id=${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
