@@ -6,10 +6,39 @@ import mongoose from 'mongoose';
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// GET /api/blogs - Get all blogs
-export async function GET() {
+// GET /api/blogs or /api/blogs?id=xxx - Get all blogs or a single blog by ID
+export async function GET(request: NextRequest) {
   try {
     await connectDB();
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    
+    // If id is provided, get single blog
+    if (id) {
+      if (!mongoose.Types.ObjectId.isValid(id)) {
+        return NextResponse.json(
+          { success: false, message: 'Invalid blog ID' },
+          { status: 400 }
+        );
+      }
+      
+      const blog = await Blog.findById(id);
+      
+      if (!blog) {
+        return NextResponse.json(
+          { success: false, message: 'Blog not found' },
+          { status: 404 }
+        );
+      }
+      
+      return NextResponse.json({
+        success: true,
+        data: blog,
+        message: 'Blog fetched successfully'
+      });
+    }
+    
+    // Otherwise get all blogs
     const blogs = await Blog.find({}).sort({ createdAt: -1 });
     
     return NextResponse.json({
