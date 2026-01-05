@@ -105,22 +105,23 @@ export async function PUT(
   }
 }
 
-// DELETE - Delete a blog
+
+// DELETE /api/blogs/[id]
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> } // params is a Promise
 ) {
   try {
     await connectDB();
-    const { id } = await params;
-    
-    console.log("DELETE received ID:", id); // Debug log
-    console.log("ID type:", typeof id); // Debug log
+
+    const resolvedParams = await params; // ✅ unwrap the promise
+    const id = resolvedParams.id;
+
+    console.log("Deleting blog with ID:", id);
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      console.log("Invalid ObjectId format:", id); // Debug log
       return NextResponse.json(
-        { success: false, message: 'Invalid blog ID' },
+        { success: false, message: "Invalid blog ID" },
         { status: 400 }
       );
     }
@@ -129,7 +130,7 @@ export async function DELETE(
 
     if (!deletedBlog) {
       return NextResponse.json(
-        { success: false, message: 'Blog not found' },
+        { success: false, message: "Blog not found" },
         { status: 404 }
       );
     }
@@ -137,13 +138,18 @@ export async function DELETE(
     return NextResponse.json({
       success: true,
       data: deletedBlog,
-      message: 'Blog deleted successfully'
+      message: "Blog deleted successfully",
     });
   } catch (error) {
-    console.error('Delete blog error:', error);
+    console.error("DELETE blog error:", error);
     return NextResponse.json(
-      { success: false, message: 'Failed to delete blog' },
+      { success: false, message: "Failed to delete blog" },
       { status: 500 }
     );
   }
 }
+
+
+
+
+

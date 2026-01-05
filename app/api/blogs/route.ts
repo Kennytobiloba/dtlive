@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
     const body = await request.json();
     const { title, excerpt, content, author, date, venue, image } = body;
-     console.log("newblog", image)
+    //  console.log("newblog", image)
 
     // Only require the essential fields
     if (!title || !content || !author) {
@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
       venue,
       image: image || "/placeholder.svg"
     });
-    console.log(" new blog created", newBlog)
+    // console.log(" new blog created", newBlog)
    
 
     return NextResponse.json({
