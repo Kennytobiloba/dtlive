@@ -7,22 +7,32 @@ import mongoose from 'mongoose';
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+// Handle OPTIONS requests
+export async function OPTIONS() {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    },
+  });
+}
+
 
 
 
 // GET /api/blogs/[id] - Get a single blog by ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
     await connectDB();
-    const { id } = await params;
-
-    console.log("GET blog by ID:", id); // Debug log
+    const resolvedParams = await Promise.resolve(params);
+    const { id } = resolvedParams;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      console.log("Invalid ObjectId:", id); // Debug log
       return NextResponse.json(
         { success: false, message: 'Invalid blog ID' },
         { status: 400 }
@@ -30,7 +40,6 @@ export async function GET(
     }
 
     const blog = await Blog.findById(id);
-    console.log("blog", blog)
 
     if (!blog) {
       return NextResponse.json(
@@ -39,19 +48,15 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({
-      success: true,
-      data: blog,
-      message: 'Blog fetched successfully'
-    });
+    return NextResponse.json({ success: true, data: blog });
   } catch (error) {
-    console.error('Get blog error:', error);
     return NextResponse.json(
       { success: false, message: 'Failed to fetch blog' },
       { status: 500 }
     );
   }
 }
+
 
 // PUT /api/blogs/[id] - Update a blog
 export async function PUT(
