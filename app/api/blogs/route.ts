@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
     const body = await request.json();
     const { title, excerpt, content, author, date, venue, image } = body;
-     console.log("newblog", body)
+     console.log("newblog", image)
 
     // Only require the essential fields
     if (!title || !content || !author) {
@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
       venue,
       image: image || "/placeholder.svg"
     });
-    console.log(" new blog", newBlog)
+    console.log(" new blog created", newBlog)
    
 
     return NextResponse.json({
@@ -168,26 +168,26 @@ export async function PUT(request: NextRequest) {
 }
 
 
-// DELETE - Delete a blog (use query param: ?id=xxx)
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-  try {
-    await connectDB()
-    const { id } = params
-    console.log("id", id)
+// // DELETE - Delete a blog (use query param: ?id=xxx)
+// export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+//   try {
+//     await connectDB()
+//     const { id } = params
+//     // console.log("id", id)
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return NextResponse.json({ success: false, message: 'Invalid blog ID' }, { status: 400 })
-    }
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//       return NextResponse.json({ success: false, message: 'Invalid blog ID' }, { status: 400 })
+//     }
 
-    const deletedBlog = await Blog.findByIdAndDelete(id)
+//     const deletedBlog = await Blog.findByIdAndDelete(id)
 
-    if (!deletedBlog) {
-      return NextResponse.json({ success: false, message: 'Blog not found' }, { status: 404 })
-    }
+//     if (!deletedBlog) {
+//       return NextResponse.json({ success: false, message: 'Blog not found' }, { status: 404 })
+//     }
 
-    return NextResponse.json({ success: true, data: deletedBlog, message: 'Blog deleted successfully' })
-  } catch (error) {
-    console.error('Delete blog error:', error)
-    return NextResponse.json({ success: false, message: 'Failed to delete blog' }, { status: 500 })
-  }
-}
+//     return NextResponse.json({ success: true, data: deletedBlog, message: 'Blog deleted successfully' })
+//   } catch (error) {
+//     console.error('Delete blog error:', error)
+//     return NextResponse.json({ success: false, message: 'Failed to delete blog' }, { status: 500 })
+//   }
+// }
