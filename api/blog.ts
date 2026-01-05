@@ -50,7 +50,7 @@ export const getBlogs = async () => {
 
 export const getBlogById = async (id:any) => {
   try {
-    const response = await fetch(`/api/blogs?id=${id}`);
+    const response = await fetch(`/api/blogs/${id}`);
     const result = await response.json();
     
     if (result.success) {
@@ -66,7 +66,7 @@ export const getBlogById = async (id:any) => {
 
 export const updateBlog = async (id:any, updatedData:any) => {
   try {
-    const response = await fetch(`/api/blogs?id=${id}`, {
+    const response = await fetch(`/api/blogs/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export const updateBlog = async (id:any, updatedData:any) => {
 
 export const deleteBlog = async (id:any) => {
   try {
-    const response = await fetch(`/api/blogs?id=${id}`, {
+    const response = await fetch(`/api/blogs/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

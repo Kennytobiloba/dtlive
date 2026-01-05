@@ -167,46 +167,27 @@ export async function PUT(request: NextRequest) {
   }
 }
 
+
 // DELETE - Delete a blog (use query param: ?id=xxx)
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    await connectDB();
-    const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
-    
-    if (!id) {
-      return NextResponse.json(
-        { success: false, message: 'Blog ID is required' },
-        { status: 400 }
-      );
-    }
+    await connectDB()
+    const { id } = params
+    console.log("id", id)
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid blog ID' },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, message: 'Invalid blog ID' }, { status: 400 })
     }
 
-    const deletedBlog = await Blog.findByIdAndDelete(id);
+    const deletedBlog = await Blog.findByIdAndDelete(id)
 
     if (!deletedBlog) {
-      return NextResponse.json(
-        { success: false, message: 'Blog not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, message: 'Blog not found' }, { status: 404 })
     }
 
-    return NextResponse.json({
-      success: true,
-      data: deletedBlog,
-      message: 'Blog deleted successfully'
-    });
+    return NextResponse.json({ success: true, data: deletedBlog, message: 'Blog deleted successfully' })
   } catch (error) {
-    console.error('Delete blog error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Failed to delete blog' },
-      { status: 500 }
-    );
+    console.error('Delete blog error:', error)
+    return NextResponse.json({ success: false, message: 'Failed to delete blog' }, { status: 500 })
   }
 }
