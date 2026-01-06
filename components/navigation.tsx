@@ -71,28 +71,28 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 flex flex-col gap-4 animate-fade-in">
-            <Link href="/" className="text-sm hover:text-primary transition-colors text-foreground">
+          <div className="md:hidden mt-4 pb-4 flex flex-col gap-4 animate-fade-in bg-background/95 backdrop-blur-md rounded-lg p-4 border border-border">
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="text-sm hover:text-primary transition-colors text-foreground">
               Home
             </Link>
-            <Link href="/#about" className="text-sm hover:text-primary transition-colors text-foreground">
+            <Link href="/#about" onClick={() => setIsMobileMenuOpen(false)} className="text-sm hover:text-primary transition-colors text-foreground">
               About
             </Link>
-            <Link href="/#instruments" className="text-sm hover:text-primary transition-colors text-foreground">
+            <Link href="/#instruments" onClick={() => setIsMobileMenuOpen(false)} className="text-sm hover:text-primary transition-colors text-foreground">
               Instruments
             </Link>
-            <Link href="/blog" className="text-sm hover:text-primary transition-colors text-foreground">
+            <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="text-sm hover:text-primary transition-colors text-foreground">
               Blog
             </Link>
-            <Link href="/#contact" className="text-sm hover:text-primary transition-colors text-foreground">
+            <Link href="/#contact" onClick={() => setIsMobileMenuOpen(false)} className="text-sm hover:text-primary transition-colors text-foreground">
               Contact
             </Link>
-            <Link href="/#contact">
+            <Link href="/#contact" onClick={() => setIsMobileMenuOpen(false)}>
               <Button size="sm" className="w-fit bg-primary hover:bg-primary/90">
                 Book Me Now
               </Button>
             </Link>
-            <Link href="/admin">
+            <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)}>
               <Button size="sm" className="w-fit" variant="outline">
                 Admin
               </Button>

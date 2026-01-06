@@ -50,21 +50,15 @@ export function About() {
 
           <div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-balance text-foreground">
-              The Art of
-              <span className="block text-primary mt-2">
-                Multi-Instrumental Mastery
-              </span>
+              About <span className="text-primary">Me</span>
             </h2>
 
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              With over 10 years of experience in circular musical performance, I bring a unique approach to live music
-              by seamlessly transitioning between piano, guitar, violin, and drums within a single performance.
+              Damilare Titus Durojaiye, professionally known as Dtlive, is a Sheffield-based vocalist, songwriter, and live band performer with over a decade of professional experience. Known for dynamic performances and soulful delivery, Dtlive has built a strong reputation for creating memorable musical experiences across weddings, corporate functions, cultural events, and more.
             </p>
 
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              My passion lies in creating immersive musical experiences that showcase the versatility and depth of
-              multi-instrumental artistry. From intimate acoustic sessions to full orchestral arrangements, each
-              performance is crafted to tell a story.
+              Musically versatile, Dtlive specialises in contemporary music, Juju, gospel, Fuji, and hip hop. His strong stage presence and ability to read the room ensure every performance is engaging and impactful. Beyond live performances, Dtlive is an accomplished songwriter creating original compositions that reflect depth, creativity, and authenticity.
             </p>
 
             <div className="grid grid-cols-3 gap-6 mt-8">

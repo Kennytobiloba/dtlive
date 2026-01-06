@@ -109,15 +109,15 @@ export async function PUT(
 // DELETE /api/blogs/[id]
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> } // params is a Promise
+  { params }: { params: Promise<{ id: string }> } 
 ) {
   try {
     await connectDB();
 
-    const resolvedParams = await params; // ✅ unwrap the promise
+    const resolvedParams = await params; 
     const id = resolvedParams.id;
 
-    console.log("Deleting blog with ID:", id);
+    // console.log("Deleting blog with ID:", id);
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
