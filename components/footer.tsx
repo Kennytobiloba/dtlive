@@ -38,17 +38,17 @@ export function Footer() {
           <div>
             <h3 className="font-bold mb-4 text-foreground">Connect</h3>
             <div className="space-y-2 text-sm">
-              <a href="#" className="block text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.instagram.com/dtliveuk?igsh=OGZlYjV2c2NmcWpu" target="_blank" rel="noopener noreferrer" className="block text-muted-foreground hover:text-primary transition-colors">
                 Instagram
               </a>
-              <a href="#" className="block text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://youtube.com/@dtliveband_int?si=ze0jipGEEJjz9UCj" target="_blank" rel="noopener noreferrer" className="block text-muted-foreground hover:text-primary transition-colors">
                 YouTube
               </a>
-              <a href="#" className="block text-muted-foreground hover:text-primary transition-colors">
-                Spotify
+              <a href="https://www.tiktok.com/@dtliveband.uk?_r=1&_t=ZN-92qJoUmfLqo" target="_blank" rel="noopener noreferrer" className="block text-muted-foreground hover:text-primary transition-colors">
+                TikTok
               </a>
-              <a href="#" className="block text-muted-foreground hover:text-primary transition-colors">
-                SoundCloud
+              <a href="https://www.facebook.com/share/1La169MLku/" target="_blank" rel="noopener noreferrer" className="block text-muted-foreground hover:text-primary transition-colors">
+                Facebook
               </a>
             </div>
           </div>

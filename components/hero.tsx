@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Music, Play } from "lucide-react"
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import BgImg from "../img/damilare.jpeg"
 
 export function Hero() {
@@ -58,10 +59,12 @@ export function Hero() {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center px-2">
-            <Button size="sm" className="gap-2 px-4 py-2 md:px-8 md:py-4 text-sm md:text-lg w-full sm:w-auto">
-              <Play className="w-4 h-4 md:w-6 md:h-6" />
-              Watch Performance
-            </Button>
+            <Link href="https://www.tiktok.com/@dtliveband.uk?_r=1&_t=ZN-92qJoUmfLqo" target="_blank" rel="noopener noreferrer">
+              <Button size="sm" className="gap-2 px-4 py-2 md:px-8 md:py-4 text-sm md:text-lg w-full sm:w-auto">
+                <Play className="w-4 h-4 md:w-6 md:h-6" />
+                Watch Performance
+              </Button>
+            </Link>
             <Button
               size="sm"
               variant="outline"
