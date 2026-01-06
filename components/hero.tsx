@@ -39,7 +39,8 @@ export function Hero() {
           {/* Badge */}
           <div className="inline-flex flex-wrap items-center md:mt-10 justify-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full bg-primary/20 border border-primary/30 mb-6 md:mb-8">
             <Music className="w-4 h-4 md:w-5 md:h-5 text-primary flex-shrink-0" />
-            <span className="text-xs md:text-sm font-medium text-white">Multi-Instrumentalist & Composer</span>
+            <span className="text-xs md:text-sm font-medium text-white">
+             Vocalist • Songwriter • Multi-Instrumentalist</span>
           </div>
 
           {/* Main Heading */}
