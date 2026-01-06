@@ -65,13 +65,7 @@ export function Hero() {
                 Watch Performance
               </Button>
             </Link>
-            <Button
-              size="sm"
-              variant="outline"
-              className="border-white/30 hover:bg-white/10 text-white hover:text-white px-4 py-2 md:px-8 md:py-4 text-sm md:text-lg w-full sm:w-auto"
-            >
-              View Portfolio
-            </Button>
+           
           </div>
 
           {/* Stats */}
