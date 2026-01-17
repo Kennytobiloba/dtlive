@@ -15,7 +15,7 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="h-screen flex items-center  justify-center relative overflow-hidden ">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 -z-10">
         <Image
@@ -32,12 +32,12 @@ export function Hero() {
         
       </div>
 
-      <div className="container mx-auto px-4 relative z-10 pt-20 ">
+      <div className="container mx-auto px-4 relative z-10 py-20">
         <div
-          className={`max-w-4xl mx-auto text-center transition-all duration-1000 mt-20 md:mt-10 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+          className={`max-w-4xl mx-auto text-center transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
         >
           {/* Badge */}
-          <div className="inline-flex flex-wrap items-center md:mt-10 justify-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full bg-primary/20 border border-primary/30 mb-6 md:mb-8">
+          <div className="inline-flex flex-wrap items-center md:mt-30 justify-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full bg-primary/20 border border-primary/30 mb-6 md:mb-8 lg:mb-4">
             <Music className="w-4 h-4 md:w-5 md:h-5 text-primary flex-shrink-0" />
             <span className="text-xs md:text-sm font-medium text-white">
              Vocalist • Songwriter • Multi-Instrumentalist</span>

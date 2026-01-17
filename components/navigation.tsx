@@ -58,9 +58,7 @@ export function Navigation() {
             <Link href="/#contact">
               <Button size="sm" className="bg-primary hover:bg-primary/90">Book Me Now</Button>
             </Link>
-            <Link href="/admin">
-              <Button size="sm" variant="outline">Admin</Button>
-            </Link>
+           
           </div>
 
           {/* Mobile Menu Button */}
@@ -92,11 +90,7 @@ export function Navigation() {
                 Book Me Now
               </Button>
             </Link>
-            <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)}>
-              <Button size="sm" className="w-fit" variant="outline">
-                Admin
-              </Button>
-            </Link>
+           
           </div>
         )}
       </div>
