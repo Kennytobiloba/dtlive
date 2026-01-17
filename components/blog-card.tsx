@@ -23,6 +23,11 @@ interface BlogCardProps {
 export function BlogCard({ blog }: BlogCardProps) {
   // Function to strip HTML tags from excerpt
   const stripHtml = (html: string) => {
+    if (typeof document === "undefined") {
+      // Server-side: use regex to strip HTML tags
+      return html.replace(/<[^>]*>/g, "");
+    }
+    // Client-side: use DOM method
     const tmp = document.createElement("div");
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || "";
