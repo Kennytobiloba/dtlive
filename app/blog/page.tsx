@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer"
 import { BlogCard } from "@/components/blog-card"
 import { useAppDispatch, useAppSelector } from "@/store/hooks"
 import { getBlogsThunk } from "@/store/blogSlice"
+import AsaDayImage from "@/img/dtlive.jpeg"
 
 export default function BlogPage() {
   const dispatch = useAppDispatch()
@@ -14,6 +15,17 @@ export default function BlogPage() {
   useEffect(() => {
     dispatch(getBlogsThunk())
   }, [dispatch])
+
+  // Static featured event
+  const featuredEvent = {
+    id: "asa-day-yoruba-festival",
+    title: "Asa Day Yoruba Festival: DTlive Delivers Inspiring, Memorable Performance",
+    excerpt: "UK-based Nigerian musician and vocalist, Damilare Titus Durojaiye, professionally known as DTlive, delivered a powerful and memorable performance at the Asa Day Yoruba Festival, held at Calvary Hall, 350 Petre Street, Sheffield S4 8LU, United Kingdom. The Asa Day Yoruba Festival is an annual cultural celebration aimed at promoting Yoruba traditions, music, language, and artistic expressions within the diaspora. DTlive's performance stood out as he captivated the audience with his strong vocal delivery and stage presence, blending traditional influences with contemporary musical elements.",
+    image: AsaDayImage,
+    date: new Date().toISOString(),
+    venue: "Calvary Hall, Sheffield, UK",
+    href: "https://newtelegraphng.com/asa-day-yoruba-festival-dtlive-delivers-inspiring-memorable-performance/"
+  }
 
   return (
     <div className="min-h-screen">
@@ -40,6 +52,10 @@ export default function BlogPage() {
           )}
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <BlogCard 
+              key={featuredEvent.id}
+              blog={featuredEvent}
+            />
             {blogs.map((blog) => (
               <BlogCard key={blog._id} blog={{
                 id: blog._id,
