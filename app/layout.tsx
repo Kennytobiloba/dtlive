@@ -51,16 +51,21 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "MusicGroup",
               "name": "DTlive",
-              "url": "https://dtlive.com",
+              "url": "https://www.dtliveband.com",
               "sameAs": [
-                "https://www.instagram.com/dtliveuk?igsh=OGZlYjV2c2NmcWpu",
-                "https://youtube.com/@dtliveband_int?si=ze0jipGEEJjz9UCj",
-                "https://www.tiktok.com/@dtliveband.uk?_r=1&_t=ZN-92qJoUmfLqo",
-                "https://www.facebook.com/share/1La169MLku/"
+                "https://www.instagram.com/dtliveuk/",
+                "https://www.youtube.com/@dtliveband_int",
+                "https://www.tiktok.com/@dtliveband.uk",
+                "https://www.facebook.com/dtliveband/"
               ],
-              "image": "https://dtlive.com/images/profile.jpg",
+              "image": "https://www.dtliveband.com/images/profile.jpg",
               "genre": ["Afrobeats", "World Music", "Contemporary"],
-              "description": "UK-based Nigerian musician and vocalist specializing in circular musical performance across piano, guitar, violin, and drums"
+              "description": "UK-based Nigerian musician and vocalist specializing in circular musical performance across piano, guitar, violin, and drums",
+              "founder": {
+                "@type": "Person",
+                "name": "Olaatunbi Kehinde",
+                "sameAs": "https://www.instagram.com/dtliveuk/"
+              }
             })
           }}
         />
