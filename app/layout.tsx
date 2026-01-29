@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Providers from "@/components/providers";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import "./globals.css";
 
 
@@ -39,8 +40,31 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "MusicGroup",
+              "name": "DTlive",
+              "url": "https://dtlive.com",
+              "sameAs": [
+                "https://www.instagram.com/dtliveuk?igsh=OGZlYjV2c2NmcWpu",
+                "https://youtube.com/@dtliveband_int?si=ze0jipGEEJjz9UCj",
+                "https://www.tiktok.com/@dtliveband.uk?_r=1&_t=ZN-92qJoUmfLqo",
+                "https://www.facebook.com/share/1La169MLku/"
+              ],
+              "image": "https://dtlive.com/images/profile.jpg",
+              "genre": ["Afrobeats", "World Music", "Contemporary"],
+              "description": "UK-based Nigerian musician and vocalist specializing in circular musical performance across piano, guitar, violin, and drums"
+            })
+          }}
+        />
+      </head>
       <body className="font-sans antialiased">
         <Providers>{children}</Providers>
+        <WhatsAppButton />
         <Analytics />
       </body>
     </html>
