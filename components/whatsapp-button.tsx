@@ -5,9 +5,7 @@ import { useState } from "react"
 
 export function WhatsAppButton() {
   const [isHovered, setIsHovered] = useState(false)
-  const whatsappNumber = "447378573137" // Replace with your WhatsApp number
-  const whatsappMessage = "Hi DTlive! I'm interested in booking you for a performance. Can we discuss the details?"
-  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`
+  const whatsappLink = "https://wa.me/message/C3TR6UWRTKVKO1"
 
   return (
     <div className="fixed bottom-6 right-6 z-40 flex items-end gap-3">
