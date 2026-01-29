@@ -53,32 +53,37 @@ export default function RootLayout({
               "@type": "Person",
               "name": "Damilare Titus Durojaiye",
               "alternateName": [
+                "Damilare Titus Duraojayiye",
                 "DTLIVE",
                 "DTlive",
-                "DTlive Band",
+                "DTLIVE Band",
                 "dtliveband"
               ],
               "description":
-                "DTLIVE is a multi-instrumentalist and composer known for circular musical performances across piano, guitar, violin, and drums.",
+                "Damilare Titus Durojaiye, professionally known as DTLIVE, is a Nigerian-born multi-instrumentalist, composer, and live performance artist. He is widely recognized for his innovative circular music performances, seamlessly combining piano, guitar, violin, drums, and digital looping techniques. DTLIVE has performed at cultural festivals, concerts, and workshops across Nigeria and internationally, delivering immersive and inspirational musical experiences that blend classical, contemporary, and African influences.",
               "image": "https://www.dtliveband.com/images/profile.jpg",
               "url": "https://www.dtliveband.com",
+              "jobTitle": "Multi-Instrumentalist, Composer, Live Performer",
+              "knowsAbout": [
+                "Live Music Performance",
+                "Music Composition",
+                "Circular Music",
+                "Piano",
+                "Guitar",
+                "Violin",
+                "Drums",
+                "Music Workshops"
+              ],
               "sameAs": [
                 "https://www.instagram.com/dtliveuk/",
                 "https://www.youtube.com/@dtliveband_int",
                 "https://www.tiktok.com/@dtliveband.uk",
                 "https://www.facebook.com/dtliveband/"
-              ],
-              "jobTitle": "Musician, Composer",
-              "knowsAbout": [
-                "Music Performance",
-                "Piano",
-                "Guitar",
-                "Violin",
-                "Drums"
               ]
             })
           }}
         />
+
 
         {/* Open Graph meta tags for profile image */}
         <meta property="og:type" content="website" />
