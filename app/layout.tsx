@@ -59,7 +59,7 @@ export default function RootLayout({
               },
               "publisher": {
                 "@type": "Organization",
-                "name": "DTlive Band",
+                "name": "dtlive Band",
                 "logo": {
                   "@type": "ImageObject",
                   "url": "https://www.dtliveband.com/images/profile.jpg"
