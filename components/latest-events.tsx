@@ -24,7 +24,7 @@ export function LatestEvents() {
     image: AsaDayImage,
     date: new Date().toISOString(),
     venue: "Calvary Hall, Sheffield, UK",
-    href: "https://newtelegraphng.com/asa-day-yoruba-festival-dtlive-delivers-inspiring-memorable-performance/" // Add your link here
+    href: "https://newtelegraphng.com/asa-day-yoruba-festival-dtlive-delivers-inspiring-memorable-performance/" 
   }
 
   // Get the latest 2 blogs (since we're adding 1 featured event)

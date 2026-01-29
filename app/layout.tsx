@@ -49,26 +49,33 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "MusicGroup",
-              "name": "DTlive",
-              "url": "https://www.dtliveband.com",
-              "sameAs": [
-                "https://www.instagram.com/dtliveuk/",
-                "https://www.youtube.com/@dtliveband_int",
-                "https://www.tiktok.com/@dtliveband.uk",
-                "https://www.facebook.com/dtliveband/"
-              ],
-              "image": "https://www.dtliveband.com/images/profile.jpg",
-              "genre": ["Afrobeats", "World Music", "Contemporary"],
-              "description": "UK-based Nigerian musician and vocalist specializing in circular musical performance across piano, guitar, violin, and drums",
-              "founder": {
-                "@type": "Person",
-                "name": "Olaatunbi Kehinde",
-                "sameAs": "https://www.instagram.com/dtliveuk/"
-              }
+              "@type": "NewsArticle",
+              "headline": "DTlive featured at Asa Day Yoruba Festival",
+              "url": "https://newtelegraphng.com/asa-day-yoruba-festival-dtlive-delivers-inspiring-memorable-performance/",
+              "datePublished": "2026-01-16T00:00:00Z",
+              "author": {
+                "@type": "Organization",
+                "name": "New Telegraph"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "DTlive Band",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://www.dtliveband.com/images/profile.jpg"
+                },
+                "sameAs": [
+                  "https://www.instagram.com/dtliveuk/",
+                  "https://www.youtube.com/@dtliveband_int",
+                  "https://www.tiktok.com/@dtliveband.uk",
+                  "https://www.facebook.com/dtliveband/"
+                ]
+              },
+              "mainEntityOfPage": "https://newtelegraphng.com/asa-day-yoruba-festival-dtlive-delivers-inspiring-memorable-performance/"
             })
           }}
         />
+
       </head>
       <body className="font-sans antialiased">
         <Providers>{children}</Providers>
