@@ -59,7 +59,8 @@ export default function RootLayout({
               },
               "publisher": {
                 "@type": "Organization",
-                "name": "dtlive Band",
+                "name": "DTlive Band",
+                "alternateName": ["DTlive", "Damilare Titus Durojaiye","dtlive", "dtlive band", "dtliveband"],
                 "logo": {
                   "@type": "ImageObject",
                   "url": "https://www.dtliveband.com/images/profile.jpg"

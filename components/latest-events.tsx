@@ -51,7 +51,7 @@ export function LatestEvents() {
               "publisher": {
                 "@type": "Organization",
                 "name": "dtlive Band",
-                "alternateName": ["DTlive", "Damilare Titus Durojaiye"],
+                "alternateName": ["DTlive", "Damilare Titus Durojaiye","dtlive", "dtlive band", "dtliveband"],      
                 "logo": {
                   "@type": "ImageObject",
                   "url": "https://www.dtliveband.com/images/profile.jpg"
