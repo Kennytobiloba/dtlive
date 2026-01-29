@@ -106,7 +106,7 @@ export default function AdminPage() {
                       <div className="relative w-full md:w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
                         <Image
                           src={blog.image || '/placeholder.png'}
-                          alt={blog.title}
+                          alt={`DTlive - ${blog.title}`}
                           fill
                           className="object-cover"
                         />

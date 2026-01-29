@@ -20,7 +20,7 @@ export function Hero() {
       <div className="absolute inset-0 -z-10">
         <Image
           src={BgImg}
-          alt="Background"
+          alt="DTlive Background - Musician Performance"
           fill
           className="object-cover object-top w-full h-full"
           priority

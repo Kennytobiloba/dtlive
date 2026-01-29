@@ -42,7 +42,7 @@ export function About() {
           <div className="relative h-[500px] rounded-2xl overflow-hidden border-4 border-primary/30 shadow-2xl shadow-primary/20">
             <Image
               src={Img}
-              alt="Musician performing"
+              alt="DTlive - Musician performing with instruments"
               fill
               className="object-cover"
             />

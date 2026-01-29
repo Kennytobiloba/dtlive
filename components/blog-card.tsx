@@ -38,7 +38,7 @@ export function BlogCard({ blog }: BlogCardProps) {
       <div className="relative h-48 w-full">
         <Image 
           src={blog.image || "/placeholder.svg"} 
-          alt={blog.title} 
+          alt={`DTlive - ${blog.title}`} 
           fill 
           className="object-cover object-top  bg-muted/20" 
         />

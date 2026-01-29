@@ -29,7 +29,7 @@ export function Navigation() {
             <div className="relative w-10 h-10 md:w-20 md:h-20">
               <Image
                 src={Logo}
-                alt="logo"
+                alt="DTlive Logo"
                 fill
                 className="object-contain"
                 priority

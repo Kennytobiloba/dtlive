@@ -104,7 +104,7 @@ export default function BlogPostPage({ params }: { params: Promise<{ id: string 
             <div className="relative h-[400px] w-full rounded-2xl overflow-hidden mb-8 bg-muted/20">
               <Image 
                 src={blog.image} 
-                alt={blog.title} 
+                alt={`DTlive - ${blog.title}`} 
                 fill 
                 className="object-cover" 
               />

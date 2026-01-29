@@ -90,7 +90,7 @@ export function ImageUpload({ value, onChange, disabled }: ImageUploadProps) {
         <div className="relative w-full h-64 rounded-lg overflow-hidden border border-border bg-muted">
           <Image
             src={preview}
-            alt="Preview"
+            alt="DTlive Image Preview"
             fill
             className="object-cover"
             onError={() => {

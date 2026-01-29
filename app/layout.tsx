@@ -50,30 +50,32 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "NewsArticle",
-              "headline": "DTlive featured at Asa Day Yoruba Festival",
-              "url": "https://newtelegraphng.com/asa-day-yoruba-festival-dtlive-delivers-inspiring-memorable-performance/",
-              "datePublished": "2026-01-16T00:00:00Z",
-              "author": {
-                "@type": "Organization",
-                "name": "New Telegraph"
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "DTlive Band",
-                 "alternateName": ["DTlive", "Damilare Titus Durojaiye","dtlive", "dtlive band", "dtliveband"],
-                "logo": {
-                  "@type": "ImageObject",
-                  "url": "https://www.dtliveband.com/images/profile.jpg"
-                },
-                "sameAs": [
-                  "https://www.instagram.com/dtliveuk/",
-                  "https://www.youtube.com/@dtliveband_int",
-                  "https://www.tiktok.com/@dtliveband.uk",
-                  "https://www.facebook.com/dtliveband/"
-                ]
-              },
-              "mainEntityOfPage": "https://newtelegraphng.com/asa-day-yoruba-festival-dtlive-delivers-inspiring-memorable-performance/"
+              "@type": "Person",
+              "name": "Damilare Titus Durojaiye",
+              "alternateName": [
+                "DTLIVE",
+                "DTlive",
+                "DTlive Band",
+                "dtliveband"
+              ],
+              "description":
+                "DTLIVE is a multi-instrumentalist and composer known for circular musical performances across piano, guitar, violin, and drums.",
+              "image": "https://www.dtliveband.com/images/profile.jpg",
+              "url": "https://www.dtliveband.com",
+              "sameAs": [
+                "https://www.instagram.com/dtliveuk/",
+                "https://www.youtube.com/@dtliveband_int",
+                "https://www.tiktok.com/@dtliveband.uk",
+                "https://www.facebook.com/dtliveband/"
+              ],
+              "jobTitle": "Musician, Composer",
+              "knowsAbout": [
+                "Music Performance",
+                "Piano",
+                "Guitar",
+                "Violin",
+                "Drums"
+              ]
             })
           }}
         />
