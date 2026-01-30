@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import Img from "../img/damilarethree.jpeg"
+import Img from "../img/dtlive-band-music.jpg"
 
 
 export function About() {

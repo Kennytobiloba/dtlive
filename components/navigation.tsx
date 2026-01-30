@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Logo from "../img/Logotwo.png"
+import Logo from "../img/dtlive-band-logo.jpg"
 import Image from "next/image"
 
 export function Navigation() {

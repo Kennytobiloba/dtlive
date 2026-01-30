@@ -5,7 +5,7 @@ import { Music, Play } from "lucide-react"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import BgImg from "../img/damilare.jpeg"
+import BgImg from "../img/dtlive-band-performance.jpg"
 
 export function Hero() {
   const [isVisible, setIsVisible] = useState(false)

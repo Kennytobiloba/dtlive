@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import img from "../public/images/dtlive.png"
-import dtLive from "../img/damilare.jpeg"
+import dtLive from "../img/dtlive-band-performance.jpg"
 
 export function Gallery() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
@@ -16,7 +16,7 @@ export function Gallery() {
       title: "Performance"
     },
     {
-      src: "images/profile.jpg",
+      src: "images/dtlive-band-official.jpg",
       alt: "DTlive - Multi-instrumentalist showcase",
       title: "Showcase"
     },

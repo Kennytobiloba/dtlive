@@ -50,8 +50,8 @@ export default function RootLayout({
               ],
               "description":
                 "Damilare Titus Durojaiye, professionally known as DTLIVE, is a Nigerian-born multi-instrumentalist, composer, and live performance artist. He is widely recognized for his innovative circular music performances, seamlessly combining piano, guitar, violin, drums, and digital looping techniques. DTLIVE has performed at cultural festivals, concerts, and workshops across Nigeria and internationally, delivering immersive and inspirational musical experiences that blend classical, contemporary, and African influences.",
-              "image": "https://www.dtliveband.com/images/profile.jpg",
-              "logo": "https://www.dtliveband.com/images/Logo.jpeg",
+              "image": "https://www.dtliveband.com/images/dtlive-band-official.jpg",
+              "logo": "https://www.dtliveband.com/images/dtlive-band-logo.jpeg",
               "url": "https://www.dtliveband.com",
               "jobTitle": "Multi-Instrumentalist, Composer, Live Performer",
               "sameAs": [
@@ -87,7 +87,7 @@ export default function RootLayout({
                 ],
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://www.dtliveband.com/images/profile.jpg"
+                  "url": "https://www.dtliveband.com/images/dtlive-band-official.jpg"
                 },
                 "sameAs": [
                   "https://www.instagram.com/dtliveuk/",
@@ -106,12 +106,12 @@ export default function RootLayout({
         <meta property="og:title" content="DTLIVE - Multi-Instrumentalist & Composer" />
         <meta property="og:description" content="Professional musician specializing in circular musical performance across piano, guitar, violin, and drums. Book performances and workshops." />
         <meta property="og:url" content="https://www.dtliveband.com" />
-        <meta property="og:image" content="https://www.dtliveband.com/images/profile.jpg" />
+        <meta property="og:image" content="https://www.dtliveband.com/images/dtlive-band-official.jpg" />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="DTLIVE - Multi-Instrumentalist & Composer" />
         <meta name="twitter:description" content="Professional musician specializing in circular musical performance across piano, guitar, violin, and drums. Book performances and workshops." />
-        <meta name="twitter:image" content="https://www.dtliveband.com/images/profile.jpg" />
+        <meta name="twitter:image" content="https://www.dtliveband.com/images/dtlive-band-official.jpg" />
       </head>
 
       <body className="font-sans antialiased">

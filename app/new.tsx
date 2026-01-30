@@ -64,7 +64,7 @@ export default function RootLayout({
                  "alternateName": ["DTlive", "Damilare Titus Durojaiye","dtlive", "dtlive band", "dtliveband"],
                 "logo": {
                   "@type": "ImageObject",
-                  "url": "https://www.dtliveband.com/images/profile.jpg"
+                  "url": "https://www.dtliveband.com/images/dtlive-band-official.jpg"
                 },
                 "sameAs": [
                   "https://www.instagram.com/dtliveuk/",
@@ -83,13 +83,13 @@ export default function RootLayout({
         <meta property="og:title" content="DTLIVE - Multi-Instrumentalist & Composer" />
         <meta property="og:description" content="Professional musician specializing in circular musical performance across piano, guitar, violin, and drums. Book performances and workshops." />
         <meta property="og:url" content="https://www.dtliveband.com" />
-        <meta property="og:image" content="https://www.dtliveband.com/images/profile.jpg" />
+        <meta property="og:image" content="https://www.dtliveband.com/images/dtlive-band-official.jpg" />
 
         {/* Twitter meta tags for profile image */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="DTLIVE - Multi-Instrumentalist & Composer" />
         <meta name="twitter:description" content="Professional musician specializing in circular musical performance across piano, guitar, violin, and drums. Book performances and workshops." />
-        <meta name="twitter:image" content="https://www.dtliveband.com/images/profile.jpg" />
+        <meta name="twitter:image" content="https://www.dtliveband.com/images/dtlive-band-official.jpg" />
       </head>
       <body className="font-sans antialiased">
         <Providers>{children}</Providers>
