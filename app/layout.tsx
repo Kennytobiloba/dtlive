@@ -42,11 +42,16 @@ export default function RootLayout({
                 "DTLIVE",
                 "DTlive",
                 "DTLIVE Band",
-                "dtliveband"
+                "dtliveband",
+                "dt",
+                "Titus",
+                "Dami",
+                "Dt"
               ],
               "description":
                 "Damilare Titus Durojaiye, professionally known as DTLIVE, is a Nigerian-born multi-instrumentalist, composer, and live performance artist. He is widely recognized for his innovative circular music performances, seamlessly combining piano, guitar, violin, drums, and digital looping techniques. DTLIVE has performed at cultural festivals, concerts, and workshops across Nigeria and internationally, delivering immersive and inspirational musical experiences that blend classical, contemporary, and African influences.",
               "image": "https://www.dtliveband.com/images/profile.jpg",
+              "logo": "https://www.dtliveband.com/images/Logo.jpg",
               "url": "https://www.dtliveband.com",
               "jobTitle": "Multi-Instrumentalist, Composer, Live Performer",
               "sameAs": [

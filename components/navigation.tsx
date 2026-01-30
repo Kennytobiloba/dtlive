@@ -49,6 +49,9 @@ export function Navigation() {
             <Link href="/#instruments" className="text-sm hover:text-primary transition-colors text-foreground">
               Instruments
             </Link>
+            <Link href="/gallery" className="text-sm hover:text-primary transition-colors text-foreground">
+              Gallery
+            </Link>
             <Link href="/blog" className="text-sm hover:text-primary transition-colors text-foreground">
               Blog
             </Link>
@@ -78,6 +81,9 @@ export function Navigation() {
             </Link>
             <Link href="/#instruments" onClick={() => setIsMobileMenuOpen(false)} className="text-sm hover:text-primary transition-colors text-foreground">
               Instruments
+            </Link>
+            <Link href="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-sm hover:text-primary transition-colors text-foreground">
+              Gallery
             </Link>
             <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)} className="text-sm hover:text-primary transition-colors text-foreground">
               Blog
